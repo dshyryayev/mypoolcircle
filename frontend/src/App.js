@@ -1,8 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NavbarMenu from "./Navbar";
-import Register from "./Register";
-import Pools from "./Pools";
+import NavbarMenu from "./components/Navbar";
+import Register from "./components/Register";
+import Pools from "./components/Pools";
 
 function App() {
   return (
