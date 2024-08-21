@@ -6,7 +6,6 @@ import Pools from "./components/Pools";
 import { useState, useEffect } from "react";
 import { connect, getContractAndSigner } from "./pool_circle_contract";
 
-
 function App() {
 
   const [contract, setContract] = useState(null);
@@ -31,9 +30,9 @@ function App() {
 
     if (contract) {
       signer.getAddress().then((address) => {
-        console.log({address});
+        console.log({ address });
         contract.members(address).then((resultIsMember) => {
-          console.log({resultIsMember});
+          console.log({ resultIsMember });
           //setIsMember(resultIsMember);
         });
       });
