@@ -3,7 +3,9 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
-const NavbarMenu = () => {
+const NavbarMenu = ({
+    connect, connected, registerMember, isMember
+}) => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container fluid>
@@ -14,7 +16,12 @@ const NavbarMenu = () => {
                         <Nav.Link href="/pools">Pools</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Button variant="success">Connect to Metamask</Button>
+                        {!isMember && <Button onClick={registerMember} disabled={!connected || isMember} className="btn btn-primary">Register</Button>}
+
+                        {!connected ?
+                            <Button onClick={connect} variant="success">Connect to Metamask</Button>
+                            : <Button variant="success" disabled>Connected</Button>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Container>
