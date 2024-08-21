@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+const ethers = require("ethers");
 
 const address = "0x91fEC2a2a43Bc0e06a025bf92cc873C2D868Bbd2";
 const abi = [
@@ -79,17 +79,30 @@ const abi = [
         "type": "function"
     }
 ];
-const provider = new ethers.BrowserProvider(window.ethereum);
+//const provider = new ethers.BrowserProvider(window.ethereum);
+const url = "http://127.0.0.1:7545";
+const provider = new ethers.JsonRpcProvider(url)
 
-export const connect = async () => {
-    await provider.send("eth_requestAccounts", []);;
+const connect = async () => {
+    //await provider.send("eth_requestAccounts", []);;
     return getContractAndSigner();
 }
 
-export const getContractAndSigner = async () => {
+const getContractAndSigner = async () => {
     const signer = await provider.getSigner();
     console.log({ signer });
     const contract = new ethers.Contract(address, abi, signer);
     console.log({ contract });
     return { signer, contract };
 }
+
+async function main() {
+    const { signer, contract } = await connect();
+    console.log({ signer, contract });
+    const address = await signer.getAddress();
+    console.log({ address });
+    const isMember = await contract.members(address);
+    console.log({ isMember });
+}
+
+main();

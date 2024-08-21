@@ -4,7 +4,7 @@ pragma solidity >=0.8.24 <0.9.0;
 
 contract PoolCircleAdmin {
     address public admin;
-    mapping(address => bool) public memebers;
+    mapping(address => bool) public members;
 
     event MemberJoined(address indexed member, uint256 joinedAt);
 
@@ -22,8 +22,8 @@ contract PoolCircleAdmin {
     }
 
     function addNewMember() public {
-        require(!memebers[msg.sender], "you are already a member");
-        memebers[msg.sender] = true;
+        require(!members[msg.sender], "you are already a member");
+        members[msg.sender] = true;
         emit MemberJoined(msg.sender, block.timestamp);
     }
 }

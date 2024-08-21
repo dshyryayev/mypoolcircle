@@ -16,11 +16,11 @@ const NavbarMenu = ({
                         <Nav.Link href="/pools">Pools</Nav.Link>
                     </Nav>
                     <Nav>
-                        {!isMember && <Button onClick={registerMember} disabled={!connected || isMember} className="btn btn-primary">Register</Button>}
+                        {!isMember && <Button onClick={registerMember} disabled={!connected || isMember} className="btn btn-primary me-2">Register</Button>}
 
                         {!connected ?
                             <Button onClick={connect} variant="success">Connect to Metamask</Button>
-                            : <Button variant="success" disabled>Connected</Button>
+                            : <Button variant="success" disabled>Connected to Metamask</Button>
                         }
                     </Nav>
                 </Navbar.Collapse>
