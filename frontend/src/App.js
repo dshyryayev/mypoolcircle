@@ -40,10 +40,17 @@ function App() {
   }
 
   const connectCallback = async () => {
-    const { contract } = await connect();
+    const { signer, contract } = await connect();
     setContract(contract);
     if (contract) {
       setConnected(true);
+      signer.getAddress().then((address) => {
+        console.log({ address });
+        contract.members(address).then((resultIsMember) => {
+          console.log({ resultIsMember });
+          setIsMember(resultIsMember);
+        });
+      });
     } else {
       setConnected(false);
     }
