@@ -33,7 +33,7 @@ function App() {
         console.log({ address });
         contract.members(address).then((resultIsMember) => {
           console.log({ resultIsMember });
-          //setIsMember(resultIsMember);
+          setIsMember(resultIsMember);
         });
       });
     }

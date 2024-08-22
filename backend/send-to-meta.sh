@@ -1,0 +1,1 @@
+node ./scripts/send-to-account-1-on-meta.js
