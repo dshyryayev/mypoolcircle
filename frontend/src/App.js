@@ -14,9 +14,7 @@ function App() {
 
   const handleMemberState = useCallback(async (signer, contract) => {
     const signerAddress = await signer.getAddress();
-    console.log({ address: signerAddress });
     contract.members(signerAddress).then((resultIsMember) => {
-      console.log({ resultIsMember });
       setIsMember(resultIsMember);
     });
   }, []);
@@ -61,10 +59,9 @@ function App() {
     }
 
     await contract.addNewMember().then(() => {
-      console.log("member added");
       setIsMember(true);
     }).catch((err) => {
-      console.log(err);
+      console.log(err)
     });
 
   }
