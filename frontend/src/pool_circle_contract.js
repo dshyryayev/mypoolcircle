@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 
-const address = "0x19c9BD7A0D037Ca4762473d20E9C9403B4c71c77";
+const address = "0x189E45980c6656027388c38918BdfDD2bFf98687";
 const abi = [
     {
         "inputs": [],

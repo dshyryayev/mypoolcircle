@@ -5,7 +5,7 @@ async function main() {
     const provider = new ethers.JsonRpcProvider("http://127.0.0.1:7545");
 
     // Use the first account to send ETH
-    const senderPrivateKey = '0x8519fbd9ef0dcac79bf480aa19fb26235fb11ead00ab24feace6053296dadeda';
+    const senderPrivateKey = '0x5de84472c585803d6d95ff69541597a8528fc3270556d422236d17b424d95a9a';
     const senderWallet = new ethers.Wallet(senderPrivateKey, provider);
 
     // Set the recipient address
