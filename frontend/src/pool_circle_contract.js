@@ -88,8 +88,6 @@ export const connect = async () => {
 
 export const getContractAndSigner = async () => {
     const signer = await provider.getSigner();
-    console.log({ signer });
     const contract = new ethers.Contract(address, abi, signer);
-    console.log({ contract });
     return { signer, contract };
 }

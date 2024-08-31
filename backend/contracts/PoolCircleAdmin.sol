@@ -2,11 +2,41 @@
 
 pragma solidity >=0.8.24 <0.9.0;
 
-contract PoolCircleAdmin {
-    address public admin;
-    mapping(address => bool) public members;
+import "./Pool.sol";
 
-    event MemberJoined(address indexed member, uint256 joinedAt);
+interface IPoolFactory {
+    function createPool(
+        string memory name,
+        string memory description,
+        address poolAdmin
+    ) external returns (address);
+}
+
+contract PoolCircleAdmin {
+    // admin - is current Main admin
+    // members - is current Main members
+
+    uint256 private poolCounter;
+
+    address public admin;
+    mapping(address => bool) public registeredUsers;
+
+    event RegisteredUserJoined(address indexed member, uint256 joinedAt);
+
+    struct CirclePool {
+        uint256 poolID;
+        string name;
+        string description;
+        uint256 createdAt;
+        address[] poolMembers;
+        address poolAdmin;
+        address poolContractAddress;
+        Pool poolContract;
+        string poolType; // Add this line
+    }
+
+    // the "address" here is a creator of the pool or poolAdmin
+    mapping(address => CirclePool[]) public ownedPools;
 
     constructor() {
         admin = msg.sender;
@@ -17,13 +47,59 @@ contract PoolCircleAdmin {
         _;
     }
 
+    modifier isRegisteredUser() {
+        require(registeredUsers[msg.sender], "you are not a member");
+        _;
+    }
+
     function changeAdmin(address newAdmin) public onlyAdmin {
         admin = newAdmin;
     }
 
-    function addNewMember() public {
-        require(!members[msg.sender], "you are already a member");
-        members[msg.sender] = true;
-        emit MemberJoined(msg.sender, block.timestamp);
+    IPoolFactory public poolFactory;
+
+    function setPoolFactory(address _poolFactory) external onlyAdmin {
+        poolFactory = IPoolFactory(_poolFactory);
+    }
+
+    function createPool(
+        string memory name,
+        string memory description,
+        string memory poolType // Add this parameter
+    ) external isRegisteredUser {
+        address poolAdmin = msg.sender;
+        poolCounter++;
+
+        // Call the PoolFactory to create a new pool
+        address newPoolAddress = poolFactory.createPool(
+            name,
+            description,
+            poolAdmin
+        );
+
+        // Create a new CirlePool instance
+        CirclePool memory newPool = CirclePool({
+            poolID: poolCounter,
+            name: name,
+            description: description,
+            createdAt: block.timestamp,
+            poolMembers: new address[](1),
+            poolAdmin: poolAdmin,
+            poolContractAddress: newPoolAddress,
+            poolContract: Pool(newPoolAddress),
+            poolType: poolType // Add this line
+        });
+
+        // Add the pool admin as the first member
+        newPool.poolMembers[0] = poolAdmin;
+
+        // Add the new pool to the ownedPools mapping
+        ownedPools[poolAdmin].push(newPool);
+    }
+
+    function registerUser() external {
+        require(!registeredUsers[msg.sender], "you are already a member");
+        registeredUsers[msg.sender] = true;
+        emit RegisteredUserJoined(msg.sender, block.timestamp);
     }
 }
