@@ -22,6 +22,11 @@ contract PoolCircleAdmin {
     mapping(address => bool) public registeredUsers;
 
     event RegisteredUserJoined(address indexed member, uint256 joinedAt);
+    event PoolCreated(
+        address indexed poolAddress,
+        string name,
+        string poolType
+    );
 
     struct CirclePool {
         uint256 poolID;
@@ -36,7 +41,7 @@ contract PoolCircleAdmin {
     }
 
     // the "address" here is a creator of the pool or poolAdmin
-    mapping(address => CirclePool[]) public ownedPools;
+    mapping(address => CirclePool[]) public registeredPools;
 
     constructor() {
         admin = msg.sender;
@@ -70,7 +75,7 @@ contract PoolCircleAdmin {
         address poolAdmin = msg.sender;
         poolCounter++;
 
-        // Call the PoolFactory to create a new pool
+        // Call the PoolFactory function to create a new pool
         address newPoolAddress = poolFactory.createPool(
             name,
             description,
@@ -93,8 +98,10 @@ contract PoolCircleAdmin {
         // Add the pool admin as the first member
         newPool.poolMembers[0] = poolAdmin;
 
-        // Add the new pool to the ownedPools mapping
-        ownedPools[poolAdmin].push(newPool);
+        // Add the new pool to the registeredPools mapping
+        registeredPools[poolAdmin].push(newPool);
+
+        emit PoolCreated(newPoolAddress, name, poolType);
     }
 
     function registerUser() external {

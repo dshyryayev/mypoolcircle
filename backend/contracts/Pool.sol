@@ -8,6 +8,8 @@ contract Pool {
     address public poolAdmin;
     address[] public poolMembers;
 
+    event MemberAdded(address newMember);
+
     constructor(
         uint256 _poolID,
         string memory _name,
@@ -21,13 +23,26 @@ contract Pool {
         poolMembers.push(_poolAdmin);
     }
 
-    function addMember(address newMember) external {
-        require(msg.sender == poolAdmin, "Only pool admin can add members");
+    modifier onlyPoolAdmin() {
+        require(msg.sender == poolAdmin, "only pool admin can perform this action");
+        _;
+    }
+
+    function addMember(address newMember) external onlyPoolAdmin {
         poolMembers.push(newMember);
     }
 
     function createEvent(string memory eventName, uint256 eventDate) external {
         // Implement event creation logic
+    }
+
+    function addNewMember(address newMember) external onlyPoolAdmin {
+        poolMembers.push(newMember);
+        emit MemberAdded(newMember);
+    }
+
+    function getPoolMembers() external view returns (address[] memory) {
+        return poolMembers;
     }
 
     function payout(address payable recipient, uint256 amount) external {
