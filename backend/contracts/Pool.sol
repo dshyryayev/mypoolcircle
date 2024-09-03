@@ -25,4 +25,12 @@ contract Pool {
         require(msg.sender == poolAdmin, "Only pool admin can add members");
         poolMembers.push(newMember);
     }
+
+    function createEvent(string memory eventName, uint256 eventDate) external {
+        // Implement event creation logic
+    }
+
+    function payout(address payable recipient, uint256 amount) external {
+        // Implement payout logic
+    }
 }

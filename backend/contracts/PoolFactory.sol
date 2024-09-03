@@ -36,7 +36,13 @@ contract BasicPool is Pool {
     constructor(string memory name, string memory description, address poolAdmin) 
         Pool(1, name, description, poolAdmin) {}
     
-    // Add basic pool specific functions here
+    function createEvent(string memory eventName, uint256 eventDate) external override {
+        // Implement basic event creation logic
+    }
+
+    function payout(address payable recipient, uint256 amount) external override {
+        // Implement basic payout logic
+    }
 }
 
 // Premium Pool implementation
@@ -44,13 +50,25 @@ contract PremiumPool is Pool {
     constructor(string memory name, string memory description, address poolAdmin) 
         Pool(2, name, description, poolAdmin) {}
     
-    // Add premium pool specific functions here
+    function createEvent(string memory eventName, uint256 eventDate) external override {
+        // Implement premium event creation logic
+    }
+
+    function payout(address payable recipient, uint256 amount) external override {
+        // Implement premium payout logic
+    }
 }
 
 // Enterprise Pool implementation
 contract EnterprisePool is Pool {
     constructor(string memory name, string memory description, address poolAdmin) 
-        Pool(3,name, description, poolAdmin) {}
+        Pool(3, name, description, poolAdmin) {}
     
-    // Add enterprise pool specific functions here
+    function createEvent(string memory eventName, uint256 eventDate) external override {
+        // Implement enterprise event creation logic
+    }
+
+    function payout(address payable recipient, uint256 amount) external override {
+        // Implement enterprise payout logic
+    }
 }
