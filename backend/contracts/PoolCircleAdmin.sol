@@ -8,6 +8,7 @@ interface IPoolFactory {
     function createPool(
         string memory name,
         string memory description,
+        string memory poolType,
         address poolAdmin
     ) external returns (address);
 }
@@ -79,6 +80,7 @@ contract PoolCircleAdmin {
         address newPoolAddress = poolFactory.createPool(
             name,
             description,
+            poolType,
             poolAdmin
         );
 

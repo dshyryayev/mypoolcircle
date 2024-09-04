@@ -9,24 +9,32 @@ import "./concrete_pools/EnterprisePool.sol";
 contract PoolFactory {
     enum PoolType { Basic, Premium, Enterprise }
 
+    mapping(string => PoolType) private poolTypeMap;
+
     event PoolCreated(address indexed poolAddress, string name, PoolType poolType);
+
+    constructor() {
+        poolTypeMap["Basic"] = PoolType.Basic;
+        poolTypeMap["Premium"] = PoolType.Premium;
+        poolTypeMap["Enterprise"] = PoolType.Enterprise;
+    }
 
     function createPool(
         string memory name,
         string memory description,
-        address poolAdmin,
-        PoolType poolType
+        string memory poolTypeString,
+        address poolAdmin
     ) external returns (address) {
-        Pool newPool;
+        PoolType poolType = poolTypeMap[poolTypeString];
+        require(poolType < PoolType.Enterprise || poolType == PoolType.Enterprise, "Invalid pool type");
 
+        Pool newPool;
         if (poolType == PoolType.Basic) {
             newPool = new BasicPool(name, description, poolAdmin);
         } else if (poolType == PoolType.Premium) {
             newPool = new PremiumPool(name, description, poolAdmin);
-        } else if (poolType == PoolType.Enterprise) {
-            newPool = new EnterprisePool(name, description, poolAdmin);
         } else {
-            revert("Invalid pool type");
+            newPool = new EnterprisePool(name, description, poolAdmin);
         }
 
         emit PoolCreated(address(newPool), name, poolType);
