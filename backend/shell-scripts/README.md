@@ -1,0 +1,1 @@
+@echo "check if ganache is up and running"

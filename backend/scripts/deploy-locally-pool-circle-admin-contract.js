@@ -1,8 +1,7 @@
-const { ethers, contractERC20 } = require("ethers");
+const { ethers } = require("ethers");
 const env = require('dotenv');
 const fs = require("fs");
-
-env.config();
+const path = require('path');
 
 const deployContract = async () => {
 
@@ -14,10 +13,24 @@ const deployContract = async () => {
 
   console.log('signer address:', signerAddress);
 
-  const abi = JSON.parse(fs.readFileSync("artifacts/contracts/PoolCircleAdmin.sol/PoolCircleAdmin.json")).abi;
-  const bytecode = JSON.parse(fs.readFileSync("artifacts/contracts/PoolCircleAdmin.sol/PoolCircleAdmin.json")).bytecode;
+  // adjust the path
+  const artPath = path.resolve(__dirname);
+
+  const artifactsPath = path.resolve(artPath, '../artifacts/contracts/PoolCircleAdmin.sol/PoolCircleAdmin.json');
+
+  const abi = JSON.parse(fs.readFileSync(artifactsPath)).abi;
+
+  // save the abi to a file
+  fs.writeFileSync("./pool-circle-admin-abi.json", JSON.stringify(abi));
+
+  const bytecode = JSON.parse(fs.readFileSync(artifactsPath)).bytecode;
 
   // Create a ContractFactory
+
+  const envPath = path.resolve(__dirname, '.env');
+  console.log(envPath);
+
+  env.config({ path: envPath });
 
   const privateKey = process.env.LOCAL_SIGNER_PRIVATE_KEY;
   const wallet = new ethers.Wallet(privateKey, provider);
@@ -31,6 +44,9 @@ const deployContract = async () => {
   const contract = await contractPending.waitForDeployment();
 
   const contractAddress = await contract.getAddress();
+
+  // save the contract address to a file
+  fs.writeFileSync("./pool-circle-admin-contract-address.txt", contractAddress);
 
   console.log('contract deployed at address:', contractAddress);
   return { contract, abi };

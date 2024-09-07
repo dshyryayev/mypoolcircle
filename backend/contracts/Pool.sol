@@ -24,7 +24,10 @@ contract Pool {
     }
 
     modifier onlyPoolAdmin() {
-        require(msg.sender == poolAdmin, "only pool admin can perform this action");
+        require(
+            msg.sender == poolAdmin,
+            "only pool admin can perform this action"
+        );
         _;
     }
 
@@ -32,7 +35,10 @@ contract Pool {
         poolMembers.push(newMember);
     }
 
-    function createEvent(string memory eventName, uint256 eventDate) external {
+    function createEvent(
+        string memory eventName,
+        uint256 eventDate
+    ) external virtual {
         // Implement event creation logic
     }
 
@@ -45,7 +51,10 @@ contract Pool {
         return poolMembers;
     }
 
-    function payout(address payable recipient, uint256 amount) external {
+    function payout(
+        address payable recipient,
+        uint256 amount
+    ) external virtual {
         // Implement payout logic
     }
 }

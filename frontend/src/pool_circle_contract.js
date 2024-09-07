@@ -1,6 +1,8 @@
 import { ethers } from "ethers";
 
 const address = "0x189E45980c6656027388c38918BdfDD2bFf98687";
+
+// begin: pool-circle-admin abi
 const abi = [
     {
         "inputs": [],
@@ -79,10 +81,12 @@ const abi = [
         "type": "function"
     }
 ];
+// end: pool-circle-admin abi
+
 const provider = new ethers.BrowserProvider(window.ethereum);
 
 export const connect = async () => {
-    await provider.send("eth_requestAccounts", []);;
+    await provider.send("eth_requestAccounts", []);
     return getContractAndSigner();
 }
 

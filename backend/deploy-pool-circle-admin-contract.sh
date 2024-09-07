@@ -1,1 +1,0 @@
-node ./scripts/deploy-locally-pool-circle-admin-contract.js
