@@ -94,7 +94,7 @@ contract PoolCircleAdmin {
             poolAdmin: poolAdmin,
             poolContractAddress: newPoolAddress,
             poolContract: Pool(newPoolAddress),
-            poolType: poolType // Add this line
+            poolType: poolType
         });
 
         // Add the pool admin as the first member
