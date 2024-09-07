@@ -9,7 +9,7 @@ interface IPoolFactory {
         string memory name,
         string memory description,
         string memory poolType,
-        address poolAdmin
+        address poolAdminAddress
     ) external returns (address);
 }
 
@@ -49,7 +49,10 @@ contract PoolCircleAdmin {
     }
 
     modifier onlyAdmin() {
-        require(msg.sender == adminAddress, "only admin can call this function");
+        require(
+            msg.sender == adminAddress,
+            "only admin can call this function"
+        );
         _;
     }
 
