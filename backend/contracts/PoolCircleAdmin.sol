@@ -73,7 +73,7 @@ contract PoolCircleAdmin {
         string memory description,
         string memory poolType // Add this parameter
     ) external isRegisteredUser {
-        address poolAdmin = msg.sender;
+        address poolAdminAddress = msg.sender;
         poolCounter++;
 
         // Call the PoolFactory function to create a new pool
@@ -81,7 +81,7 @@ contract PoolCircleAdmin {
             name,
             description,
             poolType,
-            poolAdmin
+            poolAdminAddress
         );
 
         // Create a new CirlePool instance
@@ -91,17 +91,17 @@ contract PoolCircleAdmin {
             description: description,
             createdAt: block.timestamp,
             poolMembers: new address[](1),
-            poolAdmin: poolAdmin,
+            poolAdmin: poolAdminAddress,
             poolContractAddress: newPoolAddress,
             poolContract: Pool(newPoolAddress),
             poolType: poolType
         });
 
         // Add the pool admin as the first member
-        newPool.poolMembers[0] = poolAdmin;
+        newPool.poolMembers[0] = poolAdminAddress;
 
         // Add the new pool to the registeredPools mapping
-        registeredPools[poolAdmin].push(newPool);
+        registeredPools[poolAdminAddress].push(newPool);
 
         emit PoolCreated(newPoolAddress, name, poolType);
     }
