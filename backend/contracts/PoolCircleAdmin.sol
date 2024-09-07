@@ -19,7 +19,7 @@ contract PoolCircleAdmin {
 
     uint256 private poolCounter;
 
-    address public admin;
+    address public adminAddress;
     mapping(address => bool) public registeredUsers;
 
     event RegisteredUserJoined(address indexed member, uint256 joinedAt);
@@ -45,11 +45,11 @@ contract PoolCircleAdmin {
     mapping(address => CirclePool[]) public registeredPools;
 
     constructor() {
-        admin = msg.sender;
+        adminAddress = msg.sender;
     }
 
     modifier onlyAdmin() {
-        require(msg.sender == admin, "only admin can call this function");
+        require(msg.sender == adminAddress, "only admin can call this function");
         _;
     }
 
@@ -58,8 +58,8 @@ contract PoolCircleAdmin {
         _;
     }
 
-    function changeAdmin(address newAdmin) public onlyAdmin {
-        admin = newAdmin;
+    function changeAdmin(address newAdminAddress) public onlyAdmin {
+        adminAddress = newAdminAddress;
     }
 
     IPoolFactory public poolFactory;
