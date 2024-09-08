@@ -3,7 +3,6 @@ const env = require('dotenv');
 const path = require('path');
 const fs = require('fs');
 
-
 async function main() {
     // need to check what is the current folder
     console.log(__dirname);
@@ -15,13 +14,11 @@ async function main() {
     // Connect to the local Ganache blockchain
     const provider = new ethers.JsonRpcProvider("http://127.0.0.1:7545");
 
-
     // Load the public key from an external file
     const publicKeyPath = path.resolve(__dirname, '../shell-scripts/signer-address.txt');
     const publicKey = fs.readFileSync(publicKeyPath, 'utf8').trim();
 
     console.log(`Loaded public key: ${publicKey}`);
-
 
     // Use the first account to send ETH
     const senderPrivateKey = process.env.LOCAL_SIGNER_PRIVATE_KEY;

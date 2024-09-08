@@ -1,3 +1,8 @@
+#!/bin/bash
+
+echo "use node 18.18.1"
+nvm use 18.18.1
+
 echo "check ganache"
 
 # Check if ganache is running
@@ -29,3 +34,6 @@ echo "compile contracts"
 
 echo "deploy contracts"
 ./deploy-pool-circle-admin-contract.sh
+
+echo "update contract in frontend"
+./update-contract.sh

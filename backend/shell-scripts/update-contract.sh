@@ -1,0 +1,1 @@
+node ../scripts/update-abi-in-front-end.js
