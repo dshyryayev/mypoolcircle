@@ -3,7 +3,17 @@
 echo "use node 18.18.1"
 nvm use 18.18.1
 
+echo "ganache manual network"
+
+
 echo "check ganache"
+
+printf 'continue (y/n)? '
+read answer
+
+if [ "$answer" != "${answer#[Nn]}" ] ;then 
+    exit 0
+fi
 
 # Check if ganache is running
 ps aux | grep -i ganache | grep -v grep > /dev/null

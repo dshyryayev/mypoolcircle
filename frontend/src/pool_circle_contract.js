@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 // begin: pool-circle-admin contract address
-const address = "0xe1fd8AF9a5e5912cFbDFA4338B2f6cAF0A5122cF";
+const address = "0x362Eeb129F99410bc460BcC7057640949625c4d7"
 // end: pool-circle-admin contract address
 
 // begin: pool-circle-admin abi
