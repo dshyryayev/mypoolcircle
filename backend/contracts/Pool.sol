@@ -2,21 +2,29 @@
 pragma solidity >=0.8.24 <0.9.0;
 
 contract Pool {
-    uint256 public poolID;
+    string public poolTypeID;
     string public name;
     string public description;
     address public poolAdmin;
     address[] public poolMembers;
 
+    struct Event {
+        string eventName;
+        uint256 eventDate;
+        uint256 eventFinalizedDate;
+    }
+
+    Event[] public events;
+
     event MemberAdded(address newMember);
 
     constructor(
-        uint256 _poolID,
+        string memory _poolTypeID,
         string memory _name,
         string memory _description,
         address _poolAdmin
     ) {
-        poolID = _poolID;
+        poolTypeID = _poolTypeID;
         name = _name;
         description = _description;
         poolAdmin = _poolAdmin;
@@ -33,18 +41,14 @@ contract Pool {
 
     function addMember(address newMember) external onlyPoolAdmin {
         poolMembers.push(newMember);
+        emit MemberAdded(newMember);
     }
 
     function createEvent(
         string memory eventName,
         uint256 eventDate
-    ) external virtual {
+    ) external {
         // Implement event creation logic
-    }
-
-    function addNewMember(address newMember) external onlyPoolAdmin {
-        poolMembers.push(newMember);
-        emit MemberAdded(newMember);
     }
 
     function getPoolMembers() external view returns (address[] memory) {

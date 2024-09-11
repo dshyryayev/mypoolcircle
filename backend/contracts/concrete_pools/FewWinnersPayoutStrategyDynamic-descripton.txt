@@ -1,0 +1,26 @@
+Few Winners Payout Strategy Dynamic implementation
+
+This pool implements a payout strategy where the number of winners is dynamic based on the number of participants in the pool.
+
+Rules:
+
+Admin can add winners and the payout is distributed among them.
+Admin can change his role to a regular member.
+At least 1 winner is required.
+
+At least 1 approval for the payout scheme is required. Explanation:
+    * When admin proposes a payout scheme, he needs to get at least 1 approval from the members.
+    * This approval should be done by a regular member who is not the admin and not the payout recipient.
+Payout scheme is something that all members need to agree to.
+
+Admin has access to the editable table of winners.
+In this table, admin is able for each row to set:
+    - winner
+    - share in percentage
+
+Admin will click "Payout" button when event is finished
+
+Supposedly, there can be other strategies, for example:
+    Strategy 75-winner1/15-winner2/10-winner3
+    Strategy 100-winner1 (this is the same as OneWinnerPool)
+    etc.
